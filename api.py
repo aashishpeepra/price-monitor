@@ -18,4 +18,5 @@ def showItems():
 @app.route("/",methods=["GET"])
 def home():
     return "<h1>Flask</h1>"
-app.run()
+if __name__=="__main__":
+    app.run()   
