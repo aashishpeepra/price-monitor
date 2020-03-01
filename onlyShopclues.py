@@ -7,6 +7,7 @@ def productShopclues(string):
 class Shopclues():
     def __init__(self, product):
         self.__product = product
+        self.__request='https://www.shopclues.com/search?q='+productShopclues(product)
         sclRespond = requests.post('https://www.shopclues.com/search?q='+productShopclues(product)).text
         soup = BeautifulSoup(sclRespond, 'lxml')
         self.__soup = soup
@@ -16,7 +17,7 @@ class Shopclues():
         try:
             strPrice = self.__soup.find('span', class_='p_price').text[3:]
             price = int(''.join(strPrice.split(',')))
-            return price
+            return {"price":price,"website":self.__request}
         except:
             return []
 
@@ -28,7 +29,7 @@ class Shopclues():
             strPrice = self.__soup.find('span', class_='p_price').text[3:]
             price = int(''.join(strPrice.split(',')))
             delivery = '-'
-            return [price,delivery]
+            return {"price":price,"delivery":delivery,"website":self.__request}
         except:
             return []
 

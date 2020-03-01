@@ -7,6 +7,7 @@ def productSnapdeal(string):
 class Snapdeal():
     def __init__(self, product):
         self.__product = product
+        self.__request='https://www.snapdeal.com/search?keyword='+productSnapdeal(product)
         snpRespond = requests.post('https://www.snapdeal.com/search?keyword='+productSnapdeal(product)).text
         soup = BeautifulSoup(snpRespond, 'lxml')
         self.__soup = soup
@@ -15,7 +16,7 @@ class Snapdeal():
         try:
             strPrice = self.__soup.find('span', class_='product-price').text[5:]
             price = int(''.join(strPrice.split(',')))  
-            return price
+            return {"price":price,"website":self.__request}
         except:
             return []
 
@@ -27,7 +28,7 @@ class Snapdeal():
             strPrice = self.__soup.find('span', class_='product-price').text[5:]
             price = int(''.join(strPrice.split(',')))
             delivery = '-'
-            return [price,delivery]
+            return {"price":price,"delivery":delivery,"website":self.__request}
         except:
             return []
 
