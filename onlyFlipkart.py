@@ -110,7 +110,7 @@ class Flipkart():
                 }
             )
         return dictFlipkart
-if _name_ == "_main_":
+if __name__ == "__main__":
     userInput = input('Enter The Name of The Product >>> ')
     obj = Flipkart(userInput)
     print(obj.get_first_price())

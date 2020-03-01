@@ -5,7 +5,7 @@ from Interface import prices
 import time
 from validations import Validate
 
-app=flask.Flask(__name__,static_folder=None)
+app=flask.Flask(__name__)
 #app.config["DEBUG"]=True
 avg=0.0
 cnt=0
