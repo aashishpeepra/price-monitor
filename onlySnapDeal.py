@@ -7,7 +7,7 @@ def productSnapdeal(string):
 class Snapdeal():
     def __init__(self, product):
         self.__product = product
-        self.__request='https://www.snapdeal.com/search?keyword='+productSnapdeal(product)
+        self.__request = 'https://www.snapdeal.com/search?keyword='+productSnapdeal(product)
         snpRespond = requests.post('https://www.snapdeal.com/search?keyword='+productSnapdeal(product)).text
         soup = BeautifulSoup(snpRespond, 'lxml')
         self.__soup = soup
@@ -16,7 +16,8 @@ class Snapdeal():
         try:
             strPrice = self.__soup.find('span', class_='product-price').text[5:]
             price = int(''.join(strPrice.split(',')))  
-            return {"price":price,"website":self.__request}
+            name = self.__soup.find('p', class_='product-title').text.strip()
+            return {"price":price,"website":self.__request,"name":name}
         except:
             return []
 
@@ -33,24 +34,15 @@ class Snapdeal():
             return []
 
     def get_first_n_complete(self, n):
-        a = 1
         b = 1
-        c = 1
         d = 1
         snpListName = []
         snpListPrice = []
         snpListImage =[]
         snpListURL =[]
-        # counter=0
-        # for name in self.__soup.find_all('p', class_='product-title'):
-        #     counter += 1
-        # print(">>>",counter)
-        for name in self.__soup.find_all('p', class_='product-title'):
-            j = name.text
-            snpListName.append(j)
-            a += 1
-            if a>n:
-                break
+        title=self.__soup.find_all('p', class_='product-title')
+        for i in range(min(n,len(title))):
+            snpListName.append(title[i].text)
         for price in self.__soup.find_all('span', class_='product-price'):
             try:
                 k = price.text
@@ -61,15 +53,12 @@ class Snapdeal():
             b += 1
             if b>n:
                 break
-        for image in self.__soup.find_all('img', class_='product-image'):
+        images = self.__soup.find_all('img', class_='product-image')
+        for i in range(min(n, len(images))):
             try:
-                k = image['src']
-                snpListImage.append(k)
+                snpListImage.append(images[i]["src"])
             except:
-                snpListImage.append('None')
-            c += 1
-            if c>n:
-                break
+                snpListImage.append(images[i]["data-src"])
         for URL in self.__soup.find_all('div', class_='product-tuple-image'):
             try:
                 k = URL.a['href']
@@ -79,9 +68,9 @@ class Snapdeal():
             d += 1
             if d>n:
                 break
-        dicti = []
+        dictSnapdeal = []
         for m in range(len(snpListName)):
-            dicti.append(
+            dictSnapdeal.append(
                 {
                     "name":snpListName[m],
                     "price":snpListPrice[m],
@@ -89,11 +78,11 @@ class Snapdeal():
                     "url":snpListURL[m]
                 }
             )
-        return dicti
+        return dictSnapdeal
 if __name__=="__main__":
     userInput = input('Enter The Name of Product >>> ')
-    obj = Snapdeal(userInput) # Enter Name of Product
+    obj = Snapdeal(userInput)
     print(obj.get_first_price())
     print(obj.get_first_delivery())
     print(obj.get_first_price_and_delivery())
-    print(obj.get_first_n_complete(5))
+    print(obj.get_first_n_complete(6))
