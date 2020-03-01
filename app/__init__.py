@@ -66,6 +66,6 @@ def route_to_price():
             return json({"error":{"title":"Item not found","type":"input error"}})
     else:
         return json(validationResult)
-app.run()
+
 if __name__=="__main__":
     app.run()   
