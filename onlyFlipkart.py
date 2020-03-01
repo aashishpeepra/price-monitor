@@ -19,7 +19,14 @@ class Flipkart():
         except:
             strPrice = self.__soup.find('div', class_='_1vC4OE').text[1:]
             price = int(''.join(strPrice.split(',')))
-        return {"price":price,"website":self.__request}
+        name = self.__soup.find('div', class_='_3wU53n')
+        if name != None:   # Mobile
+            name = name.text
+        else:
+            name = self.__soup.find('a', class_='_2cLu-l')    # Laptop
+            name = name.text
+        # print(name)
+        return {"price":price,"website":self.__request,"name":name}
 
     def get_first_delivery(self):
         delivery = '-'
@@ -82,13 +89,13 @@ class Flipkart():
         if soupURL == []:
             soupURL = self.__soup.find_all('a', class_='_2cLu-l')
             for URL in soupURL:
-                flpListURL.append(str('flipkart.com')+str(URL['href']))
+                flpListURL.append(str('https://flipkart.com')+str(URL['href']))
                 d += 1
                 if d>n:
                     break
         else:
             for URL in soupURL:
-                flpListURL.append(str('flipkart.com')+str(URL['href']))
+                flpListURL.append(str('https://flipkart.com')+str(URL['href']))
                 d += 1
                 if d>n:
                     break
@@ -109,4 +116,4 @@ if __name__=="__main__":
     print(obj.get_first_price())
     print(obj.get_first_delivery())
     print(obj.get_first_price_and_delivery())
-    print(obj.get_first_n_complete(3))
+    print(obj.get_first_n_complete(6))
