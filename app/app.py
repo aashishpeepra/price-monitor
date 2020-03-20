@@ -1,3 +1,4 @@
+import os
 import flask
 import threading
 from flask import jsonify as json 
@@ -6,6 +7,10 @@ import time
 from validations import Validate
 
 app=flask.Flask(__name__)
+app_settings = os.getenv(
+    'APP_SETTINGS'
+)
+app.config.from_object(app_settings)
 #app.config["DEBUG"]=True
 avg=0.0
 cnt=0
