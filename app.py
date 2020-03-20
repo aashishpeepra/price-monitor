@@ -67,5 +67,5 @@ def route_to_price():
     else:
         return json(validationResult)
 
-if __name__=="__main__":
-    app.run()   
+# if __name__=="__main__":
+#     app.run()   
