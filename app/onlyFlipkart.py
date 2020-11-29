@@ -14,18 +14,18 @@ class Flipkart():
 
     def get_first_price(self):
         try:
-            strPrice = self.__soup.find('div', class_='_1vC4OE').text[1:]
+            strPrice = self.__soup.find('div', class_='_30jeq3 _1_WHN1').text[1:]
             price = int(''.join(strPrice.split(',')))
         except:
-            strPrice = self.__soup.find('div', class_='_1vC4OE').text[1:]
+            strPrice = self.__soup.find('div', class_='_30jeq3 _1_WHN1').text[1:]
             price = int(''.join(strPrice.split(',')))
-        name = self.__soup.find('div', class_='_3wU53n')
+        name = self.__soup.find('div', class_='_4rR01T')
         if name != None:   # Mobile
             name = name.text
         else:
             name = self.__soup.find('a', class_='_2cLu-l')    # Laptop
             name = name.text
-        # print(name)
+        print(name)
         return {"price":price,"website":self.__request,"name":name}
 
     def get_first_delivery(self):
@@ -34,10 +34,10 @@ class Flipkart():
 
     def get_first_price_and_delivery(self):
         try:
-            strPrice = self.__soup.find('div', class_='_1vC4OE').text[1:]
+            strPrice = self.__soup.find('div', class_='_30jeq3 _1_WHN1').text[1:]
             price = int(''.join(strPrice.split(',')))
         except:
-            strPrice = self.__soup.find('div', class_='_1vC4OE').text[1:]
+            strPrice = self.__soup.find('div', class_='_30jeq3 _1_WHN1').text[1:]
             price = int(''.join(strPrice.split(',')))
         delivery = '-'
         return {"price":price,"delivery":delivery,"website":self.__request}
@@ -49,9 +49,9 @@ class Flipkart():
         d = 1
         flpListName = []
         flpListPrice = []
-        flpListImage =[]
-        flpListURL =[]
-        for price in self.__soup.find_all('div', class_='_1vC4OE'):
+        # flpListImage =[]
+        # flpListURL =[]
+        for price in self.__soup.find_all('div', class_='_30jeq3 _1_WHN1'):
                 m = price.text[1:]
                 try:
                     price1 = int(''.join(m.split(',')))
@@ -61,17 +61,19 @@ class Flipkart():
                 b += 1
                 if b>n:
                     break
-        for image in self.__soup.find_all('img', class_='_1Nyybr'):
-                try:
-                    flpListImage.append(str('https:')+str(image['src']))
-                except:
-                    flpListImage.append('None')
-                c += 1
-                if c>n:
-                    break
-        soupName = self.__soup.find_all('div', class_='_3wU53n') # Mobile
+
+        # for image in self.__soup.find_all('img', class_='_1Nyybr'):
+        #         try:
+        #             flpListImage.append(str('https:')+str(image['src']))
+        #         except:
+        #             flpListImage.append('None')
+        #         c += 1
+        #         if c>n:
+        #             break
+
+        soupName = self.__soup.find_all('div', class_='_4rR01T') # Mobile
         if soupName == []:
-            soupName = self.__soup.find_all('a', class_='_2cLu-l')
+            soupName = self.__soup.find_all('a', class_='_4rR01T')
             for name in soupName:
                 k = name.text
                 flpListName.append(k)
@@ -85,35 +87,37 @@ class Flipkart():
                 a += 1
                 if a>n:
                     break
-        soupURL = self.__soup.find_all('a', class_='_31qSD5')  #Mobile
-        if soupURL == []:
-            soupURL = self.__soup.find_all('a', class_='_2cLu-l')
-            for URL in soupURL:
-                flpListURL.append(str('https://flipkart.com')+str(URL['href']))
-                d += 1
-                if d>n:
-                    break
-        else:
-            for URL in soupURL:
-                flpListURL.append(str('https://flipkart.com')+str(URL['href']))
-                d += 1
-                if d>n:
-                    break
+
+        # soupURL = self.__soup.find_all('a', class_='_31qSD5')  #Mobile
+        # if soupURL == []:
+        #     soupURL = self.__soup.find_all('a', class_='_2cLu-l')
+        #     for URL in soupURL:
+        #         flpListURL.append(str('https://flipkart.com')+str(URL['href']))
+        #         d += 1
+        #         if d>n:
+        #             break
+        # else:
+        #     for URL in soupURL:
+        #         flpListURL.append(str('https://flipkart.com')+str(URL['href']))
+        #         d += 1
+        #         if d>n:
+        #             break
+
         dictFlipkart = []
-        for m in range(len(flpListURL)):
+        for m in range(len(flpListPrice)):
             dictFlipkart.append(
                 {
                     "name":flpListName[m],
-                    "price":flpListPrice[m],
-                    "image":flpListImage[m],
-                    "url":flpListURL[m]
+                    "price":flpListPrice[m]
+                    # "image":flpListImage[m],
+                    # "url":flpListURL[m]
                 }
             )
         return dictFlipkart
 if __name__ == "__main__":
     userInput = input('Enter The Name of The Product >>> ')
     obj = Flipkart(userInput)
-    print(obj.get_first_price())
-    print(obj.get_first_delivery())
-    print(obj.get_first_price_and_delivery())
-    print(obj.get_first_n_complete(6))
+    # print(obj.get_first_price())
+    # print(obj.get_first_delivery())
+    # print(obj.get_first_price_and_delivery())
+    print(obj.get_first_n_complete(2))
