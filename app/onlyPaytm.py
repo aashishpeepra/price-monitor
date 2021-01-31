@@ -20,7 +20,7 @@ class Paytm():
             strObj = self.__soup.find('div', class_='_1kMS').span.text
             price = int(''.join(strObj.split(',')))
             name = self.__soup.find('div', class_='UGUy').text
-            return {"price":price,"name":name,"website":self._request}
+            return {"price":price,"name":name,"website":self._request, "company": "paytm"}
         except:
             return []
     

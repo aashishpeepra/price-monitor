@@ -18,7 +18,7 @@ class TwoGud():
             name = self.__soup.find('div', class_='_3wU53n').text
             price = int(''.join(strPrice.split(',')))  
             print("Worked")
-            return {"price":price,"name":name,"website":self._request}
+            return {"price":price,"name":name,"website":self._request,"company": "2gud"}
         except:
             return []
 

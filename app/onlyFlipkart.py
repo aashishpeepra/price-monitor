@@ -20,7 +20,7 @@ class Flipkart():
             strPrice = self.__soup.find('div', class_='_30jeq3').text[1:]
             price = int(''.join(strPrice.split(',')))
         name = self.__soup.find('div', class_='_4rR01T') or self.__soup.find('a', class_='s1Q9rs')
-        return {"price":price,"website":self.__request,"name":name.text}
+        return {"price":price,"website":self.__request,"name":name.text, "company": "flipkart"}
 
     def get_first_delivery(self):
         delivery = '-'

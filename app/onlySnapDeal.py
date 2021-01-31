@@ -17,7 +17,7 @@ class Snapdeal():
             strPrice = self.__soup.find('span', class_='product-price').text[5:]
             price = int(''.join(strPrice.split(',')))  
             name = self.__soup.find('p', class_='product-title').text.strip()
-            return {"price":price,"website":self.__request,"name":name}
+            return {"price":price,"website":self.__request,"name":name,"company":"snapdeal"}
         except:
             return []
 

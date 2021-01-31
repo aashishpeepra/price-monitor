@@ -16,7 +16,7 @@ class Grofers():
         try:
             strPrice = self.__soup.find('span', class_='plp-product__price--new').text[1:]
             price = int(''.join(strPrice.split(',')))  
-            return {"price":price,"website":self.__request}
+            return {"price":price,"website":self.__request,"company":"grofers"}
         except:
             return []
 

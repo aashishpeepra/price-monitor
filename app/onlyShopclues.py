@@ -17,7 +17,7 @@ class Shopclues():
         try:
             strPrice = self.__soup.find('span', class_='p_price').text[3:]
             price = int(''.join(strPrice.split(',')))
-            return {"price":price,"website":self.__request}
+            return {"price":price,"website":self.__request,"company":"shopclues"}
         except:
             return []
 
